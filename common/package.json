@@ -1,0 +1,18 @@
+{
+  "name": "@alexsamin/blogging-common",
+  "version": "2.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@alexsamin/blogging-common": "file:",
+    "common": "file:",
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
+  }
+}
