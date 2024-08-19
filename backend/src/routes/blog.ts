@@ -53,11 +53,10 @@ blogRouter.post('/', async c => {
     data: {
       title: body.title,
       content: body.content,
-      //author: body.author,
       authorId: authorId,
     },
   })
-  return c.json({ message: 'Blog created with id ' + blog.id })
+  return c.json({ blog })
 })
 
 blogRouter.put('/', async c => {
