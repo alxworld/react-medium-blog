@@ -10,7 +10,7 @@ export const Blog = () => {
 
   console.log('Blog =>', blog)
 
-  if (loading) {
+  if (loading || !blog) {
     return <div>Loading...</div>
   }
 

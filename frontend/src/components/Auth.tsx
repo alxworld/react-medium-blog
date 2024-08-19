@@ -45,7 +45,7 @@ export const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
               <LabelInput
                 label="Name"
                 placeHolder="Alexander S"
-                onChange={e => {
+                onChange={(e: { target: { value: any } }) => {
                   setPostInputs({ ...postInputs, name: e.target.value })
                 }}
                 type="text"
@@ -55,7 +55,7 @@ export const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
             <LabelInput
               label="Email"
               placeHolder="jsalex@gmail.com"
-              onChange={e => {
+              onChange={(e: { target: { value: any } }) => {
                 setPostInputs({ ...postInputs, email: e.target.value })
               }}
               type="text"
@@ -64,8 +64,8 @@ export const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
             <LabelInput
               label="Password"
               placeHolder="********"
-              onChange={e => {
-                setPostInputs({ ...postInputs, password: e.target.value })
+              onChange={(e: { target: { value: string } }) => {
+                setPostInputs({ ...postInputs, password: e.target.value as string })
               }}
               type="password"
             />

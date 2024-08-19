@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { AvatarIcon } from './BlogCard'
-import { BACKEND_POINT_URL } from '../config'
 
 export const Appbar = () => {
   return (
