@@ -13,7 +13,7 @@ export const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
   const navigate = useNavigate()
 
   async function sendRequest() {
-    console.log('Inside sendRequest with TYPE ' + type)
+    console.log('Inside sendRequest with TYPE  ' + type)
     console.log(postInputs)
     try {
       const response = await axios.post(`${BACKEND_POINT_URL}/api/v1/user/${type}`, postInputs)
