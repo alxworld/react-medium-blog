@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from 'hono/jwt'
@@ -52,6 +53,7 @@ userRouter.post('/signup', async c => {
     }
     const jwt_token = await sign(payload, c.env.JWT_SECRET)
     console.log('User created with token ' + jwt_token)
+    console.log(jwt_token)
     return c.json({ jwt_token })
   } catch (e) {
     c.status(403)
@@ -81,9 +83,9 @@ userRouter.post('/signin', async c => {
     c.status(403)
     return c.json({ error: 'User not found' })
   }
-  const jwt = await sign({ id: user.id }, c.env.JWT_SECRET)
-  console.log('User found with token ' + jwt)
-  return c.json({ jwt })
+  const jwt_token = await sign({ id: user.id }, c.env.JWT_SECRET)
+  console.log('User found with token ' + jwt_token)
+  return c.json({ jwt_token })
 })
 
 // Home Get Page

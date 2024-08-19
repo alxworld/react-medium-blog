@@ -16,8 +16,8 @@ export const blogRouter = new Hono<{
 
 // Middleware to verify JWT token
 blogRouter.use('/*', async (c, next) => {
-  console.log('Verifying token in blog middleware')
   const authHeader = c.req.header('authorization') || ''
+  console.log('Auth header ' + authHeader)
   // Bearer token
   const token = authHeader.split(' ')[1]
   try {
@@ -26,6 +26,7 @@ blogRouter.use('/*', async (c, next) => {
       c.set('userId', response.id || '')
       console.log('Token verified with id ' + response.id)
       await next()
+      console.log('Next call completed')
     } else {
       c.status(403)
       return c.json({ error: 'Unauthorized' })
@@ -86,26 +87,48 @@ blogRouter.get('/:id', async c => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
-  const body = await c.req.json()
-  console.log('Getting blog with id ' + body.id)
+  const body = await c.req.text()
+  console.log('Request Body => ' + body)
   try {
     const blog = await prisma.blog.findFirst({
       where: { id: id },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     })
     return c.json({ blog })
   } catch (e) {
     c.status(404)
-    console.log('Blog not found with ' + body.id)
-    return c.json({ message: 'Blog not found with ' + body.id })
+    console.log('Blog not found with ' + id)
+    return c.json({ message: 'Blog not found with ' + id })
   }
 })
 
 // Todo: Implemtent Pagination
 blogRouter.get('/', async c => {
+  console.log('Getting all blogs')
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate())
-  console.log('Getting all blogs')
-  const blogs = await prisma.blog.findMany()
+  //const blogs = await prisma.blog.findMany()
+  const blogs = await prisma.blog.findMany({
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      author: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  })
   return c.json({ blogs })
 })
